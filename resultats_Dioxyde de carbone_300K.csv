@@ -1,0 +1,13 @@
+Modélisation Thermodynamique — PIC
+Date;10/05/2026 10:09
+
+Gaz;Dioxyde de carbone;CO₂
+Température (K);300.0
+Pression (Pa);101325.0
+Quantité (mol);1.0
+
+Grandeur;Gaz Parfait;Van der Waals
+Volume (m³);0.02461584011843079;0.024512209674177173
+Volume (L);24.61584011843079;24.51220967417717
+Écart absolu (m³);;0.00010363044425361692
+Écart relatif (%);;0.42277071561927876

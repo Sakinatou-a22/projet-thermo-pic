@@ -2,6 +2,9 @@
 from constantes import GAZ, lister_gaz
 from gaz_parfait import volume_gaz_parfait
 from van_der_waals import volume_vdw
+from comparaison import comparer
+from affichage import afficher_resultats
+from sauvegarde import exporter_csv
 from graphique import tracer_graphique
 
 # Affichage de bienvenue
@@ -24,17 +27,14 @@ n = float(input("  Quantité n (en mol)  : "))
 V_parfait = volume_gaz_parfait(P, T, n)
 V_reel    = volume_vdw(P, T, n, gaz["a"], gaz["b"])
 
-# Résultats
-ecart = abs(V_parfait - V_reel) / V_reel * 100
+# Comparaison
+resultats = comparer(V_parfait, V_reel)
 
-print("\n" + "=" * 50)
-print("  RÉSULTATS")
-print("=" * 50)
-print(f"  Gaz           : {gaz['nom']} ({gaz['formule']})")
-print(f"  Gaz parfait   : {V_parfait*1000:.4f} L")
-print(f"  Van der Waals : {V_reel*1000:.4f} L")
-print(f"  Écart         : {ecart:.4f} %")
-print("=" * 50)
+# Affichage tableau
+afficher_resultats(gaz["nom"], gaz["formule"], T, P, n, resultats)
+
+# Sauvegarde CSV
+exporter_csv(gaz["nom"], gaz["formule"], T, P, n, resultats)
 
 # Graphique
 tracer_graphique(P, T, n, gaz["a"], gaz["b"], gaz["nom"])
