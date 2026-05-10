@@ -10,8 +10,8 @@ Application Python de modélisation thermodynamique comparant le modèle du gaz 
 
 | Ingénieur | Nom | Rôle |
 |-----------|-----|------|
-| 1 | SANGARE Arouna | Chef de projet — Module saisie et gaz parfait |
-| 2 | TIENDREBEOGO Sakinatou | Calculs Van der Waals et comparaison |
+| 1 | TIENDREBEOGO Sakinatou | Chef de projet — Coordination, calculs Van der Waals et comparaison |
+| 2 | SANGARE Arouna | Module saisie et gaz parfait |
 | 3 | CONDE Abdoulaye | Affichage, graphique et sauvegarde |
 
 ---
