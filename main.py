@@ -1,4 +1,10 @@
-# Programme principal
+# ================================
+# Auteur  : SANGARE Arouna
+# Rôle    : Programme principal
+# Module  : main.py
+# Projet  : Modélisation Thermodynamique PIC
+# ================================
+
 from constantes import GAZ, lister_gaz
 from gaz_parfait import volume_gaz_parfait
 from van_der_waals import volume_vdw
@@ -11,6 +17,7 @@ from graphique import tracer_graphique
 print("=" * 50)
 print("   MODÉLISATION THERMODYNAMIQUE")
 print("   Gaz Parfait vs Van der Waals")
+print("   Université Hassan 1er de Settat")
 print("=" * 50)
 
 # Choix du gaz
