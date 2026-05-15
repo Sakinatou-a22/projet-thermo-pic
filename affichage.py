@@ -1,8 +1,16 @@
-# Module d'affichage du tableau comparatif
+# ================================
+# Auteur  : CONDE Abdoulaye
+# Rôle    : Affichage tableau comparatif
+# Module  : affichage.py
+# Projet  : Modélisation Thermodynamique PIC
+# ================================
+
 from tabulate import tabulate
 
 def afficher_resultats(gaz, formule, T, P, n, resultats):
-    
+    """
+    Affiche un tableau comparatif formaté dans le terminal.
+    """
     donnees = [
         ["Volume (m³)", f"{resultats['V_parfait']:.6e}", f"{resultats['V_vdw']:.6e}"],
         ["Volume (L)",  f"{resultats['V_parfait']*1000:.4f}", f"{resultats['V_vdw']*1000:.4f}"],
