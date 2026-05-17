@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique — Modélisation Thermodynamique</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        h1 { color: white; text-align: center; margin-bottom: 10px; font-size: 2em; }
+        .sous-titre { color: #90caf9; text-align: center; margin-bottom: 30px; }
+        .carte {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background: #1565c0;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-size: 0.9em;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e3f2fd;
+            font-size: 0.9em;
+            color: #333;
+        }
+        tr:nth-child(even) { background: #f8f9fa; }
+        tr:hover { background: #e3f2fd; }
+        .btn-retour {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: white;
+            color: #1565c0;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .vide {
+            text-align: center;
+            color: #888;
+            padding: 40px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📊 Historique des calculs</h1>
+    <p class="sous-titre">Bonjour {{ current_user.nom }} — vos calculs sauvegardés</p>
+
+    <a href="/" class="btn-retour">← Retour</a>
+
+    <div class="carte">
+        {% if calculs %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Gaz</th>
+                    <th>T (K)</th>
+                    <th>P (Pa)</th>
+                    <th>n (mol)</th>
+                    <th>V Parfait (L)</th>
+                    <th>V VdW (L)</th>
+                    <th>Écart (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in calculs %}
+                <tr>
+                    <td>{{ c.date }}</td>
+                    <td>{{ c.gaz }}</td>
+                    <td>{{ c.temperature }}</td>
+                    <td>{{ c.pression }}</td>
+                    <td>{{ c.quantite }}</td>
+                    <td>{{ c.V_parfait }}</td>
+                    <td>{{ c.V_vdw }}</td>
+                    <td>{{ c.ecart }} %</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="vide">
+            Aucun calcul sauvegardé pour l'instant.<br>
+            Faites votre premier calcul !
+        </div>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>

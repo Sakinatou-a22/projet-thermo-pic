@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modélisation Thermodynamique — PIC</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            min-height: 100vh;
+        }
+        nav {
+            background: rgba(0,0,0,0.2);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        nav .logo { color: white; font-size: 1.1em; font-weight: bold; }
+        nav .liens {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: #90caf9;
+            text-decoration: none;
+            font-size: 0.9em;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+        nav a:hover { background: rgba(255,255,255,0.1); color: white; }
+        nav .btn-logout { background: #b71c1c; color: white !important; }
+        nav .btn-admin  { background: #e65100; color: white !important; }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px 15px; }
+        h1 { text-align: center; color: white; font-size: 1.8em; margin-bottom: 5px; }
+        .sous-titre { text-align: center; color: #90caf9; margin-bottom: 20px; font-size: 1em; }
+
+        .carte {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+        .carte h2 {
+            color: #1565c0; margin-bottom: 15px;
+            font-size: 1.2em; border-bottom: 2px solid #e3f2fd;
+            padding-bottom: 8px;
+        }
+        .grille {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 600px) {
+            .grille { grid-template-columns: 1fr; }
+            h1 { font-size: 1.4em; }
+            nav .liens { gap: 6px; }
+            nav a { font-size: 0.8em; padding: 5px 8px; }
+            .resultats { grid-template-columns: 1fr !important; }
+        }
+        label { display: block; color: #555; margin-bottom: 5px; font-weight: 500; font-size: 0.95em; }
+        select, input {
+            width: 100%; padding: 10px;
+            border: 2px solid #e3f2fd; border-radius: 8px;
+            font-size: 1em; color: #333; background: #f8f9fa;
+        }
+        select:focus, input:focus { border-color: #1565c0; outline: none; background: white; }
+        .btn-calculer {
+            width: 100%; padding: 14px;
+            background: linear-gradient(135deg, #1565c0, #0d47a1);
+            color: white; border: none; border-radius: 10px;
+            font-size: 1.1em; font-weight: bold; cursor: pointer; margin-top: 15px;
+        }
+        .btn-calculer:hover { opacity: 0.9; }
+        .resultats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .boite { text-align: center; padding: 15px; border-radius: 12px; color: white; }
+        .boite-gp    { background: linear-gradient(135deg, #1565c0, #1976d2); }
+        .boite-vdw   { background: linear-gradient(135deg, #b71c1c, #c62828); }
+        .boite-ecart { background: linear-gradient(135deg, #2e7d32, #388e3c); }
+        .boite .valeur { font-size: 1.5em; font-weight: bold; display: block; }
+        .boite .libelle { font-size: 0.8em; opacity: 0.9; margin-top: 5px; }
+        .graphique-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+        .btn-telecharger {
+            display: inline-block; padding: 10px 20px;
+            background: #2e7d32; color: white; border-radius: 8px;
+            text-decoration: none; font-weight: bold; font-size: 0.95em;
+        }
+        .erreur {
+            background: #ffebee; color: #b71c1c;
+            padding: 12px; border-radius: 8px; border-left: 4px solid #b71c1c;
+        }
+        .equipe { text-align: center; color: #90caf9; font-size: 0.85em; margin-top: 10px; padding-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">🔬 Thermo PIC</div>
+    <div class="liens">
+        <a href="/historique">📊 Historique</a>
+        <a href="/profil">👤 {{ current_user.nom }}</a>
+        {% if current_user.email == "thermo.pic.settat@gmail.com" %}
+        <a href="/admin" class="btn-admin">⚙️ Admin</a>
+        {% endif %}
+        <a href="/logout" class="btn-logout">Déconnexion</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Modélisation Thermodynamique</h1>
+    <p class="sous-titre">Gaz Parfait vs Van der Waals — Université Hassan 1er de Settat</p>
+
+    <div class="carte">
+        <h2>Paramètres</h2>
+        <form method="POST">
+            <div class="grille">
+                <div>
+                    <label>Gaz</label>
+                    <select name="gaz">
+                        {% for code, info in gaz_liste.items() %}
+                        <option value="{{ code }}" {% if resultats and resultats.code == code %}selected{% endif %}>
+                            {{ info.formule }} — {{ info.nom }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label>Température (K)</label>
+                    <input type="number" name="temperature"
+                           value="{{ resultats.T if resultats else 300 }}"
+                           step="0.1" min="1">
+                </div>
+                <div>
+                    <label>Pression (Pa)</label>
+                    <input type="number" name="pression"
+                           value="{{ resultats.P if resultats else 101325 }}"
+                           step="1" min="1">
+                </div>
+                <div>
+                    <label>Quantité (mol)</label>
+                    <input type="number" name="quantite"
+                           value="{{ resultats.n if resultats else 1.0 }}"
+                           step="0.01" min="0.01">
+                </div>
+            </div>
+            <button type="submit" class="btn-calculer">⚡ Calculer</button>
+        </form>
+    </div>
+
+    {% if erreur %}
+    <div class="carte">
+        <div class="erreur">❌ Erreur : {{ erreur }}</div>
+    </div>
+    {% endif %}
+
+    {% if resultats %}
+    <div class="carte">
+        <h2>Résultats — {{ resultats.gaz }} ({{ resultats.formule }})</h2>
+        <div class="resultats">
+            <div class="boite boite-gp">
+                <span class="valeur">{{ resultats.V_gp }} L</span>
+                <span class="libelle">Gaz Parfait<br>PV = nRT</span>
+            </div>
+            <div class="boite boite-vdw">
+                <span class="valeur">{{ resultats.V_vdw }} L</span>
+                <span class="libelle">Van der Waals<br>(P + an²/V²)(V-nb) = nRT</span>
+            </div>
+            <div class="boite boite-ecart">
+                <span class="valeur">{{ resultats.ecart_rel }} %</span>
+                <span class="libelle">Écart relatif<br>{{ resultats.ecart_abs }} L</span>
+            </div>
+        </div>
+        <img class="graphique-img"
+             src="/graphique/{{ resultats.code }}/{{ resultats.T }}/{{ resultats.P }}/{{ resultats.n }}"
+             alt="Courbe P-V">
+        <a class="btn-telecharger"
+           href="/telecharger/{{ resultats.code }}/{{ resultats.T }}/{{ resultats.P }}/{{ resultats.n }}">
+            ⬇️ Télécharger les résultats (CSV)
+        </a>
+    </div>
+    {% endif %}
+
+    <p class="equipe">
+        TIENDREBEOGO Sakinatou · SANGARE Arouna · CONDE Abdoulaye
+    </p>
+</div>
+</body>
+</html>
