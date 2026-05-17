@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thermo PIC — Modélisation Thermodynamique</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            min-height: 100vh;
+        }
+        nav {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .logo { color: white; font-size: 1.3em; font-weight: bold; }
+        .nav-liens { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn-nav {
+            padding: 8px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+        .btn-login { color: white; border: 2px solid white; }
+        .btn-inscription { background: white; color: #1565c0; }
+
+        .hero {
+            text-align: center;
+            padding: 50px 20px 40px;
+        }
+        .hero h1 {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        .hero p {
+            color: #90caf9;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        .hero-btns { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .hero-btn {
+            display: inline-block;
+            padding: 14px 30px;
+            background: white;
+            color: #1565c0;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .hero-btn-outline {
+            display: inline-block;
+            padding: 14px 30px;
+            border: 2px solid white;
+            color: white;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        @media (max-width: 768px) {
+            .features { grid-template-columns: 1fr 1fr; }
+            .hero h1 { font-size: 1.8em; }
+            .equipe-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) {
+            .features { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 1.5em; }
+            .gaz-grid { gap: 6px; }
+        }
+        .feature {
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px 15px;
+            text-align: center;
+            color: white;
+        }
+        .feature .icone { font-size: 2em; margin-bottom: 10px; }
+        .feature h3 { font-size: 1em; margin-bottom: 8px; }
+        .feature p { color: #90caf9; font-size: 0.85em; line-height: 1.5; }
+
+        .gaz-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 10px 20px 30px;
+            text-align: center;
+        }
+        .gaz-section h2 { color: white; font-size: 1.5em; margin-bottom: 15px; }
+        .gaz-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .gaz-badge {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 99px;
+            font-size: 0.9em;
+        }
+
+        .equipe {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 10px 20px 30px;
+            text-align: center;
+        }
+        .equipe h2 { color: white; font-size: 1.5em; margin-bottom: 20px; }
+        .equipe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .membre {
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px;
+            color: white;
+        }
+        .membre .avatar { font-size: 2.5em; margin-bottom: 8px; }
+        .membre h3 { font-size: 0.9em; margin-bottom: 5px; }
+        .membre p { color: #90caf9; font-size: 0.8em; }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #90caf9;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">🔬 Thermo PIC</div>
+    <div class="nav-liens">
+        <a href="/login" class="btn-nav btn-login">Connexion</a>
+        <a href="/inscription" class="btn-nav btn-inscription">S'inscrire</a>
+    </div>
+</nav>
+
+<div class="hero">
+    <h1>Modélisation Thermodynamique</h1>
+    <p>Étude comparative : Gaz Parfait vs Van der Waals</p>
+    <div class="hero-btns">
+        <a href="/inscription" class="hero-btn">Commencer gratuitement</a>
+        <a href="/login" class="hero-btn-outline">Se connecter</a>
+    </div>
+</div>
+
+<div class="features">
+    <div class="feature">
+        <div class="icone">⚡</div>
+        <h3>Calculs instantanés</h3>
+        <p>Comparez les deux modèles avec vos propres paramètres T, P et n.</p>
+    </div>
+    <div class="feature">
+        <div class="icone">📊</div>
+        <h3>Graphique P-V</h3>
+        <p>Visualisez la courbe P-V superposant les deux modèles.</p>
+    </div>
+    <div class="feature">
+        <div class="icone">⬇️</div>
+        <h3>Export CSV</h3>
+        <p>Téléchargez vos résultats pour les analyser dans Excel.</p>
+    </div>
+    <div class="feature">
+        <div class="icone">🔐</div>
+        <h3>Compte sécurisé</h3>
+        <p>Créez votre compte et retrouvez l'historique de vos calculs.</p>
+    </div>
+    <div class="feature">
+        <div class="icone">🧪</div>
+        <h3>12 gaz disponibles</h3>
+        <p>CO₂, N₂, CH₄, H₂O, H₂, O₂, He, NH₃, SO₂, Cl₂, Ar, Ne.</p>
+    </div>
+    <div class="feature">
+        <div class="icone">📱</div>
+        <h3>Accessible partout</h3>
+        <p>Application web accessible sur PC, tablette et téléphone.</p>
+    </div>
+</div>
+
+<div class="gaz-section">
+    <h2>Gaz disponibles</h2>
+    <div class="gaz-grid">
+        <span class="gaz-badge">CO₂</span>
+        <span class="gaz-badge">N₂</span>
+        <span class="gaz-badge">CH₄</span>
+        <span class="gaz-badge">H₂O</span>
+        <span class="gaz-badge">H₂</span>
+        <span class="gaz-badge">O₂</span>
+        <span class="gaz-badge">He</span>
+        <span class="gaz-badge">NH₃</span>
+        <span class="gaz-badge">SO₂</span>
+        <span class="gaz-badge">Cl₂</span>
+        <span class="gaz-badge">Ar</span>
+        <span class="gaz-badge">Ne</span>
+    </div>
+</div>
+
+<div class="equipe">
+    <h2>Notre équipe</h2>
+    <div class="equipe-grid">
+        <div class="membre">
+            <div class="avatar">👩‍💻</div>
+            <h3>TIENDREBEOGO Sakinatou</h3>
+            <p>Chef de projet<br>Flask & Sécurité</p>
+        </div>
+        <div class="membre">
+            <div class="avatar">👨‍💻</div>
+            <h3>SANGARE Arouna</h3>
+            <p>Développeur<br>Calculs & Déploiement</p>
+        </div>
+        <div class="membre">
+            <div class="avatar">👨‍💻</div>
+            <h3>CONDE Abdoulaye</h3>
+            <p>Développeur<br>Affichage & Visualisation</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    Université Hassan 1er de Settat — Filière PIC — 2026
+</footer>
+
+</body>
+</html>
